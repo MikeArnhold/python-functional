@@ -1,20 +1,21 @@
 """Tests"""
 from unittest import TestCase
-from pipe import PipeUnary, pipe_unary
+
+from pipe import PipeArbitrary, PipeUnary
 
 
-class PipeUnaryClasTests(TestCase):
+class PipeUnaryClassTests(TestCase):
     """test Pipe class"""
 
     def test_init(self) -> None:
         """init func first in pipe"""
 
-        def double(value: int) -> int:
-            return value * 2
+        def double(value: int) -> float:
+            return float(value * 2)
 
         stack = PipeUnary(double)
 
-        self.assertEqual(4, stack(2))
+        self.assertEqual(4.0, stack(2))
 
     def test_2nd(self) -> None:
         """pipes 2 funcs"""
@@ -27,28 +28,31 @@ class PipeUnaryClasTests(TestCase):
 
         stack = PipeUnary(double).pipe(to_string)
 
-        self.assertEqual(str(float(42)), stack(21))
+        self.assertEqual(str(42.0), stack(21))
 
 
-class PipeUnaryFuncTests(TestCase):
-    """test pipe function"""
+class PipeArbitraryClassTests(TestCase):
+    """test Pipe class"""
 
-    def test_pipe(self) -> None:
-        """return Pipe object"""
+    def test_init(self) -> None:
+        """init func first in pipe"""
 
-        def double(_: int) -> float:
-            raise NotImplementedError()
+        def _sum(fst: int, snd: int) -> float:
+            return float(fst + snd)
 
-        stack = pipe_unary(double)
+        stack = PipeArbitrary(_sum)
 
-        self.assertTrue(isinstance(stack, PipeUnary))
+        self.assertEqual(7.0, stack(2, 5))
 
-    def test_pipe_call(self) -> None:
-        """Pipe object has func"""
+    def test_2nd(self) -> None:
+        """pipes 2 funcs"""
 
-        def double(value: int) -> float:
-            return value * 2
+        def _sum(fst: int, snd: int) -> float:
+            return float(fst + snd)
 
-        stack = pipe_unary(double)
+        def to_string(value: float) -> str:
+            return str(value)
 
-        self.assertEqual(42, stack(21))
+        stack = PipeArbitrary(_sum).pipe(to_string)
+
+        self.assertEqual(str(float(42)), stack(20, 22))
