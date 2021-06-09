@@ -1,7 +1,7 @@
 """Tests"""
 from unittest import TestCase
 
-from pipe import PipeArbitrary, PipeUnary
+from functional.pipe import PipeArbitrary, PipeUnary
 
 
 class PipeUnaryTests(TestCase):

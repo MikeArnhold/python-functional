@@ -1,1 +1,1 @@
-# python-functional-extensions
+# python-functional
