@@ -1,1 +1,1 @@
-# python-functional-pipe
+# python-functional-extensions
