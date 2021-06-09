@@ -11,7 +11,7 @@ class PipeUnary(Generic[T1, T2]):
     """Pipe
 
     Thenable function composition via pipe method.
-    All parameters must be unary.
+    All callbacks must be unary.
     """
 
     def __init__(self, func: Callable[[T1], T2]) -> None:
@@ -33,8 +33,7 @@ class PipeArbitrary(Generic[T1]):
     """Pipe
 
     Thenable function composition via pipe method.
-    First callback parameters can be arbitrary. Composition callbacks must
-    be unary.
+    First callback can be arbitrary. Other callbacks must be unary.
     """
 
     def __init__(self, func: Callable[..., T1]) -> None:
