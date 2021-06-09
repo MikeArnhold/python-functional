@@ -4,7 +4,7 @@ from unittest import TestCase
 from pipe import PipeArbitrary, PipeUnary
 
 
-class PipeUnaryClassTests(TestCase):
+class PipeUnaryTests(TestCase):
     """test Pipe class"""
 
     def test_init(self) -> None:
@@ -31,28 +31,28 @@ class PipeUnaryClassTests(TestCase):
         self.assertEqual(str(42.0), stack(21))
 
 
-class PipeArbitraryClassTests(TestCase):
+class PipeArbitraryTests(TestCase):
     """test Pipe class"""
 
     def test_init(self) -> None:
         """init func first in pipe"""
 
-        def _sum(fst: int, snd: int) -> float:
-            return float(fst + snd)
+        def _sum(fst: int, snd: float) -> float:
+            return float(fst) + snd
 
         stack = PipeArbitrary(_sum)
 
-        self.assertEqual(7.0, stack(2, 5))
+        self.assertEqual(7.0, stack(2, 5.0))
 
     def test_2nd(self) -> None:
         """pipes 2 funcs"""
 
-        def _sum(fst: int, snd: int) -> float:
-            return float(fst + snd)
+        def _sum(fst: int, snd: float) -> float:
+            return float(fst) + snd
 
         def to_string(value: float) -> str:
             return str(value)
 
         stack = PipeArbitrary(_sum).pipe(to_string)
 
-        self.assertEqual(str(float(42)), stack(20, 22))
+        self.assertEqual(str(42.0), stack(20, 22.0))
